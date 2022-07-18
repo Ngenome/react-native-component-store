@@ -44,7 +44,7 @@ const ComponentsPage = () => {
       <h1> React Native Components</h1>
 
       {data.map((e, i) => {
-        return <CodeView code={e.code} title={e.title} id={e.id} />;
+        return <CodeView key={e.id} code={e.code} title={e.title} id={e.id} />;
       })}
       {/* code syntax highlighter window here */}
     </div>
