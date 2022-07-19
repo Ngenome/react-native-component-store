@@ -4,41 +4,64 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import data from "../data";
 
+const Tabs: React.FC<{ tabs: Array<string> }> = ({ tabs }) => {
+  return (
+    <div className="flex flex-row justify-center items-center">
+      {tabs.map((e, i) => {
+        return (
+          <div
+            key={i}
+            className="tab w-fit  bg-blue-600 hover:bg-blue-700 rounded-full justify-centerflex flex-row items-center py-1 px-2 mr-2"
+          >
+            <span className="text-sm text-white">{e}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 const CodeView = ({ id, title, code }) => {
   const [collapsed, setCollapsed] = useState(true);
   const [copied, setCopied] = useState(false);
   return (
-    <div key={id} className="flex flex-col">
+    <div
+      key={id}
+      className="flex flex-col w-[25vw] h-[25vh] rounded-lg shadow-lg bg-gray-100 p-2"
+    >
       {/* copy to clipboard here */}
       <h3 className="text-blue-400 text-2xl">{title}</h3>
-      <div className="flex flex-row items-center">
-        <span
-          onClick={() => {
-            setCollapsed(!collapsed);
-          }}
-        >
-          {collapsed ? "view code" : "hide"}
-        </span>
+      <div className="relative">
+        <div className="flex flex-row items-center">
+          <span
+            className="bg-blue-500 hover:bg-blue-700 rounded-xl px-3 py-1 text-white"
+            onClick={() => {
+              setCollapsed(!collapsed);
+            }}
+          >
+            {collapsed ? "view code" : "hide"}
+          </span>
+          <span className="ml-2 text-sm text-blue-700" onClick={() => {}}>
+            {copied ? "copy to clipboard" : "copied"}
+          </span>
+        </div>
+        {!collapsed && (
+          <div className="absolute  ">
+            <SyntaxHighlighter
+              language="js"
+              className="max-h-[70vh] overflow-hidden "
+              style={darcula}
+              customStyle={{
+                width: "50vw",
+                fontSize: 10,
+              }}
+            >
+              {/* pass in code here */}
 
-        <span className="ml-2 text-sm text-blue-700" onClick={() => {}}>
-          {copied ? "copy to clipboard" : "copied"}
-        </span>
+              {code}
+            </SyntaxHighlighter>
+          </div>
+        )}
       </div>
-      {!collapsed && (
-        <SyntaxHighlighter
-          language="js"
-          className="max-h-[70vh] overflow-hidden "
-          style={darcula}
-          customStyle={{
-            width: "50vw",
-            fontSize: 10,
-          }}
-        >
-          {/* pass in code here */}
-
-          {code}
-        </SyntaxHighlighter>
-      )}
     </div>
   );
 };
@@ -107,6 +130,7 @@ const ComponentsPage = () => {
           Contact Us
         </a>
       </nav>
+      <Tabs tabs={["components", "text", "sections", "screens", "animated"]} />
 
       {/* <div className="flex items-center justify-center h-screen">
         <div className="relative inline-block">
