@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import SyntaxHighlighter from "react-syntax-highlighter";
@@ -96,25 +97,22 @@ const ComponentsPage = () => {
         </div>
 
         <div className="flex flex-col mt-4 space-y-2 lg:-mx-6 lg:mt-0 lg:flex-row lg:space-y-0">
-          <a
-            className="text-gray-700 dark:text-gray-200 lg:px-6 dark:hover:text-blue-400 hover:text-blue-500"
-            href="/"
-          >
-            Home
-          </a>
-          <a
-            className="text-gray-700 dark:text-gray-200 lg:px-6 dark:hover:text-blue-400 hover:text-blue-500"
-            href="/components"
-          >
-            Components
-          </a>
+          <Link href="/">
+            <a className="text-gray-700 dark:text-gray-200 lg:px-6 dark:hover:text-blue-400 hover:text-blue-500">
+              Home
+            </a>
+          </Link>
+          <Link href="/components">
+            <a className="text-gray-700 dark:text-gray-200 lg:px-6 dark:hover:text-blue-400 hover:text-blue-500">
+              Components
+            </a>
+          </Link>
 
-          <a
-            className="text-gray-700 dark:text-gray-200 lg:px-6 dark:hover:text-blue-400 hover:text-blue-500"
-            href="/#contact"
-          >
-            Contact
-          </a>
+          <Link href="/#contact">
+            <a className="text-gray-700 dark:text-gray-200 lg:px-6 dark:hover:text-blue-400 hover:text-blue-500">
+              Contact
+            </a>
+          </Link>
           {/* <a
                 className="text-gray-700 dark:text-gray-200 lg:px-6 dark:hover:text-blue-400 hover:text-blue-500"
                 href="#"
@@ -122,13 +120,11 @@ const ComponentsPage = () => {
                 FAQ
               </a> */}
         </div>
-
-        <a
-          className="block h-10 px-5 py-2 mt-4 text-sm text-center text-gray-700 capitalize transition-colors duration-200 transform border rounded-md dark:hover:bg-gray-700 dark:text-white lg:mt-0 hover:bg-gray-100 lg:w-auto"
-          href="#"
-        >
-          Contact Us
-        </a>
+        <Link href="/#contact">
+          <a className="block h-10 px-5 py-2 mt-4 text-sm text-center text-gray-700 capitalize transition-colors duration-200 transform border rounded-md dark:hover:bg-gray-700 dark:text-white lg:mt-0 hover:bg-gray-100 lg:w-auto">
+            Contact Us
+          </a>
+        </Link>
       </nav>
       <Tabs tabs={["components", "text", "sections", "screens", "animated"]} />
 
