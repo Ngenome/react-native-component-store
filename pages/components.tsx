@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import data from "../data";
-
+import { firebase } from "../config";
 const Tabs: React.FC<{ tabs: Array<string> }> = ({ tabs }) => {
   return (
     <div className="flex flex-row justify-center items-center">
@@ -27,7 +27,7 @@ const CodeView = ({ id, title, code }) => {
   return (
     <div
       key={id}
-      className="flex flex-col w-[25vw] h-[25vh] rounded-lg shadow-lg bg-gray-100 p-2"
+      className="flex flex-col w-[25vw] overflow-hidden  h-[25vh] rounded-lg shadow-lg bg-gray-100 p-2"
     >
       {/* copy to clipboard here */}
       <h3 className="text-blue-400 text-2xl">{title}</h3>
@@ -41,15 +41,23 @@ const CodeView = ({ id, title, code }) => {
           >
             {collapsed ? "view code" : "hide"}
           </span>
-          <span className="ml-2 text-sm text-blue-700" onClick={() => {}}>
-            {copied ? "copy to clipboard" : "copied"}
+          <span
+            className="ml-2 text-sm text-blue-700 cursor-pointer"
+            onClick={() => {
+              setCopied(true);
+              setTimeout(() => {
+                setCopied(false);
+              }, 5000);
+            }}
+          >
+            {!copied ? "copy to clipboard" : "copied"}
           </span>
         </div>
         {!collapsed && (
           <div className="absolute  ">
             <SyntaxHighlighter
               language="js"
-              className="max-h-[70vh] overflow-hidden "
+              className={`max-h-[70vh]  w-[25vw] overflow-hidden `}
               style={darcula}
               customStyle={{
                 width: "50vw",
@@ -67,6 +75,22 @@ const CodeView = ({ id, title, code }) => {
   );
 };
 const ComponentsPage = () => {
+  const [components, setComponents] = useState([]);
+  // fetch components from firestore
+  useEffect(() => {
+    // fetch data from firestore
+    firebase
+      .firestore()
+      .collection("snippets")
+      .onSnapshot((snapshot) => {
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setComponents(data);
+      });
+  }, []);
+
   return (
     <div>
       <nav className="container p-6 mx-auto lg:flex lg:justify-between lg:items-center">
@@ -128,64 +152,8 @@ const ComponentsPage = () => {
       </nav>
       <Tabs tabs={["components", "text", "sections", "screens", "animated"]} />
 
-      {/* <div className="flex items-center justify-center h-screen">
-        <div className="relative inline-block">
-          <button className="relative z-10 block p-2 text-gray-700 bg-white border border-transparent rounded-md dark:text-white focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:bg-gray-800 focus:outline-none">
-            <svg
-              className="w-5 h-5 text-gray-800 dark:text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </button>
-
-          <div className="absolute right-0 z-20 w-48 py-2 mt-2 bg-white rounded-md shadow-xl dark:bg-gray-800">
-            <a
-              href="#"
-              className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-            >
-              {" "}
-              your profile{" "}
-            </a>
-            <a
-              href="#"
-              className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-            >
-              {" "}
-              Your projects{" "}
-            </a>
-            <a
-              href="#"
-              className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-            >
-              {" "}
-              Help{" "}
-            </a>
-            <a
-              href="#"
-              className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-            >
-              {" "}
-              Settings{" "}
-            </a>
-            <a
-              href="#"
-              className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
-            >
-              {" "}
-              Sign Out{" "}
-            </a>
-          </div>
-        </div>
-      </div> */}
       <div className="ml-20">
-        {data.map((e, i) => {
+        {components.map((e, i) => {
           return (
             <CodeView key={e.id} code={e.code} title={e.title} id={e.id} />
           );

@@ -132,7 +132,7 @@ export default function Home() {
                       />
                     </svg>
 
-                    <span className="mx-2">Just Copy Paste Codeing</span>
+                    <span className="mx-2">Just Copy Paste Coding</span>
                   </p>
 
                   <p className="flex items-center -mx-2 text-gray-700 dark:text-gray-200">
