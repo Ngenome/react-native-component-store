@@ -34,9 +34,9 @@ export default function Home() {
               <div>
                 <a
                   className="text-2xl font-bold text-gray-800 dark:text-white lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300"
-                  href="#"
+                  href="/"
                 >
-                  RnComponents
+                  Codesimpl
                 </a>
               </div>
 
@@ -67,12 +67,16 @@ export default function Home() {
                   Components
                 </a>
               </Link>
+              <Link href="/components">
+                <a className="text-gray-700 dark:text-gray-200 lg:px-6 dark:hover:text-blue-400 hover:text-blue-500">
+                  Create
+                </a>
+              </Link>
               <Link href="#contact">
                 <a className="text-gray-700 dark:text-gray-200 lg:px-6 dark:hover:text-blue-400 hover:text-blue-500">
                   Contact
                 </a>
               </Link>
-
               {/* <a
                 className="text-gray-700 dark:text-gray-200 lg:px-6 dark:hover:text-blue-400 hover:text-blue-500"
                 href="#"
