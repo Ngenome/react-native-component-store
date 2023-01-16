@@ -32,12 +32,12 @@ export default function Home() {
           <nav className="container p-6 mx-auto lg:flex lg:justify-between lg:items-center">
             <div className="flex items-center justify-between">
               <div>
-                <a
+                <Link
                   className="text-2xl font-bold text-gray-800 dark:text-white lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300"
                   href="/"
                 >
                   Codesimpl
-                </a>
+                </Link>
               </div>
 
               <div className="flex lg:hidden">

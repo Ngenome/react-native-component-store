@@ -160,7 +160,7 @@ function AddComponent() {
           <label className="font-bold my-2">Tags</label>
           <div className="flex flex-row items-center flex-wrap space-x-2">
             {tags.map((tag) => (
-              <div className="flex flex-row items-center space-x-2">
+              <div key={tag} className="flex flex-row items-center space-x-2">
                 <div className="px-2 py-1 bg-gray-200 rounded-lg">
                   {tag}
                   <button
