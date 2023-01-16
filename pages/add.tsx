@@ -33,7 +33,7 @@ function AddComponent() {
     setDependencies,
     self_render,
     setSelfRender,
-    states,
+
     tagtext,
     setTagText,
     sellerPackage,
